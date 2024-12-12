@@ -1,0 +1,91 @@
+@model IT2030FinalProject.Models.Organization
+@{
+    ViewData["Title"] = "Black Knights";
+}
+
+<div class="container mt-4">
+    <!-- Organization Profile Header -->
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h2 class="mb-0">@Model.Name</h2>
+        </div>
+        <div class="card-body">
+            <!-- Basic Information -->
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>About the Organization</h4>
+                    <p class="lead">@Model.Description</p>
+
+                    @if (Model.Leader != null)
+                    {
+                        <div class="mt-4">
+                            <h4>Leader</h4>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Model.Leader.Name</h5>
+                                    <p class="card-text">@Model.Leader.About</p>
+                                    <a asp-controller="Character" 
+                                       asp-action="Lelouch" 
+                                       class="btn btn-outline-primary">View Leader Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Discussion</h4>
+        </div>
+        <div class="card-body">
+            <!-- Add Comment Form -->
+            <form asp-action="AddComment" asp-controller="Organization" method="post" class="mb-4">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="organizationId" value="@Model.Id" />
+                
+                <div class="form-group">
+                    <label for="displayName">Display Name</label>
+                    <input type="text" class="form-control" id="displayName" 
+                           name="displayName" placeholder="Anonymous">
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label for="content">Comment</label>
+                    <textarea class="form-control" id="content" name="content" 
+                              rows="3" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-3">Submit Comment</button>
+            </form>
+
+            <!-- Existing Comments -->
+            @if (Model.Comments != null && Model.Comments.Any())
+            {
+                <div class="list-group">
+                    @foreach (var comment in Model.Comments.OrderByDescending(c => c.PostedDate))
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">@comment.DisplayName</h5>
+                                <small>@comment.PostedDate.ToString("MMM dd, yyyy HH:mm")</small>
+                            </div>
+                            <p class="mb-1">@comment.Content</p>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No comments yet. Be the first to comment!</p>
+            }
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="All" class="btn btn-secondary">Back to Organizations</a>
+    </div>
+</div>

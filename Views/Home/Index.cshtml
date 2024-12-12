@@ -1,0 +1,77 @@
+@model IT2030FinalProject.Controllers.HomeViewModel
+@{
+    ViewData["Title"] = "Code Geass Fan Site";
+}
+
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="jumbotron bg-dark text-white p-5 rounded">
+        <h1 class="display-4">Welcome to Code Geass Fan Site</h1>
+        <p class="lead">Your source for information about the world of Code Geass</p>
+        <hr class="my-4 bg-light">
+        <p>Explore characters, organizations, and join discussions with other fans!</p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Site Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <p>Number of Characters: @Model.CharacterCount</p>
+                    <p>Number of Organizations: @Model.OrganizationCount</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Quick Navigation</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="@Url.Action("All", "Character")">View All Characters</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("All", "Organization")">View All Organizations</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Create", "Character")">Add New Character</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Comments Section -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="card-title mb-0">Recent Comments</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.RecentComments != null && Model.RecentComments.Any())
+            {
+                <div class="list-group">
+                    @foreach (var comment in Model.RecentComments)
+                    {
+                        <div class="list-group-item">
+                            <h6 class="mb-1">@comment.DisplayName</h6>
+                            <p class="mb-1">@comment.Content</p>
+                            <small class="text-muted">Posted on @comment.PostedDate.ToString("MMM dd, yyyy")</small>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No recent comments to display.</p>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+@model IEnumerable<IT2030FinalProject.Models.Character>
+@{
+    ViewData["Title"] = "All Characters";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Code Geass Characters</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create New Character
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No characters have been added yet.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var character in Model)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="card-title mb-0">@character.Name</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                @(character.About?.Length > 150 
+                                    ? character.About.Substring(0, 147) + "..." 
+                                    : character.About)
+                            </p>
+                            
+                            @if (!string.IsNullOrEmpty(character.Powers))
+                            {
+                                <div class="mb-3">
+                                    <strong>Powers:</strong>
+                                    <p class="card-text">
+                                        @(character.Powers.Length > 100 
+                                            ? character.Powers.Substring(0, 97) + "..." 
+                                            : character.Powers)
+                                    </p>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(character.EyeColor))
+                            {
+                                <p class="card-text">
+                                    <small class="text-muted">Eye Color: @character.EyeColor</small>
+                                </p>
+                            }
+
+                            <div class="mt-3">
+                                @if (character.Name == "Lelouch Vi Britannia")
+                                {
+                                    <a asp-action="Lelouch" class="btn btn-outline-primary">View Details</a>
+                                }
+                                else
+                                {
+                                    <!-- Add a disabled button or different styling for non-implemented characters -->
+                                    <button class="btn btn-outline-secondary" disabled>Details Coming Soon</button>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                @character.Comments?.Count Comments
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

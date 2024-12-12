@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "bHeGvNZGqCH8qBJ37B64zFCD7C0+lOvPqH9BO6PwQfk=",
+  "Source": "IT2030FinalProject",
+  "BasePath": "_content/IT2030FinalProject",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "IT2030FinalProject\\wwwroot",
+      "Source": "IT2030FinalProject",
+      "ContentRoot": "E:\\IT2030FinalProject\\wwwroot\\",
+      "BasePath": "_content/IT2030FinalProject",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}

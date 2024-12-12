@@ -1,0 +1,79 @@
+@model IT2030FinalProject.Components.MessagingViewModel
+
+<div class="messaging-component">
+    <!-- Add Comment Form -->
+    <form asp-action="AddComment" 
+          asp-controller="@Model.EntityType" 
+          method="post" 
+          class="mb-4">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="@(Model.EntityType.ToLower())Id" value="@Model.EntityId" />
+        
+        <div class="form-group mb-3">
+            <label for="displayName" class="form-label">Display Name</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="displayName" 
+                   name="displayName" 
+                   placeholder="Anonymous"
+                   value="@Model.DisplayName">
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="content" class="form-label">Your Comment</label>
+            <textarea class="form-control" 
+                      id="content" 
+                      name="content" 
+                      rows="3" 
+                      required 
+                      placeholder="Share your thoughts..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+
+    <!-- Comments Display -->
+    <div class="comments-section">
+        @if (Model.Comments != null && Model.Comments.Any())
+        {
+            <h5 class="mb-3">Comments (@Model.Comments.Count)</h5>
+            <div class="list-group">
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">@(string.IsNullOrEmpty(comment.DisplayName) ? "Anonymous" : comment.DisplayName)</h6>
+                            <small class="text-muted">
+                                @comment.PostedDate.ToString("MMM dd, yyyy HH:mm")
+                            </small>
+                        </div>
+                        <p class="mb-1">@comment.Content</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-light">
+                <p class="mb-0">No comments yet. Be the first to comment!</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Optional: Add some custom styles -->
+<style>
+    .messaging-component {
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 0.25rem;
+    }
+
+    .comments-section {
+        margin-top: 2rem;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>

@@ -1,0 +1,53 @@
+@model IT2030FinalProject.Models.Character
+@{
+    ViewData["Title"] = "Create New Character";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Create New Character</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label">Character Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="About" class="control-label">About</label>
+                    <textarea asp-for="About" class="form-control" rows="5" 
+                              placeholder="Enter character description"></textarea>
+                    <span asp-validation-for="About" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="EyeColor" class="control-label">Eye Color</label>
+                    <input asp-for="EyeColor" class="form-control" />
+                    <span asp-validation-for="EyeColor" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Powers" class="control-label">Powers</label>
+                    <textarea asp-for="Powers" class="form-control" rows="3" 
+                              placeholder="Enter character powers"></textarea>
+                    <span asp-validation-for="Powers" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">Create Character</button>
+                    <a asp-action="All" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
